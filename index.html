@@ -16,6 +16,12 @@
             --light-blue: #3B82F6;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             scroll-behavior: smooth;
@@ -135,15 +141,6 @@
             background: linear-gradient(135deg, #E0F2FE 0%, #DCFCE7 100%);
         }
 
-        .reader-form {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
         .reader-card {
             background: white;
             border-radius: 15px;
@@ -183,6 +180,8 @@
             overflow: hidden;
             margin-bottom: 30px;
             transition: transform 0.3s;
+            display: flex;
+            flex-direction: row;
         }
 
         .event-card:hover {
@@ -196,6 +195,10 @@
             padding: 20px;
             text-align: center;
             min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .event-date .day {
@@ -208,6 +211,7 @@
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: 5px;
         }
 
         .event-details {
@@ -319,17 +323,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-success {
-            background: var(--church-green);
-            border: none;
-            padding: 12px 30px;
-            font-weight: 600;
-        }
-
-        .btn-success:hover {
-            background: var(--light-green);
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -339,6 +332,15 @@
             .about-content {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .event-card {
+                flex-direction: column;
+            }
+
+            .event-date {
+                min-width: 100%;
+                padding: 15px;
             }
         }
     </style>
@@ -479,9 +481,143 @@
             <h2 class="section-title">Scripture Readers</h2>
             <p class="text-center mb-5 lead">This Week's Scripture Readers</p>
 
-            <!-- Readers List -->
             <div id="readersList" class="row">
                 <!-- Readers will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events Section -->
+    <section id="events">
+        <div class="container">
+            <h2 class="section-title">Upcoming Events</h2>
+            <p class="text-center mb-5 lead">Join us for these special gatherings</p>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="day">15</div>
+                            <div class="month">Jan</div>
+                        </div>
+                        <div class="event-details">
+                            <h4 class="text-primary mb-2">Youth Fellowship Night</h4>
+                            <p class="mb-2"><i class="fas fa-clock text-success me-2"></i>6:00 PM - 9:00 PM</p>
+                            <p class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>Church Hall</p>
+                            <p class="text-muted">Join us for an evening of worship, games, and fellowship with our youth group. All ages welcome!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="event-date" style="background: linear-gradient(135deg, var(--church-green), var(--light-green));">
+                            <div class="day">22</div>
+                            <div class="month">Jan</div>
+                        </div>
+                        <div class="event-details">
+                            <h4 class="text-primary mb-2">Community Outreach</h4>
+                            <p class="mb-2"><i class="fas fa-clock text-success me-2"></i>9:00 AM - 2:00 PM</p>
+                            <p class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>Tema Community 1</p>
+                            <p class="text-muted">Serve the community with food distribution and medical screening. Volunteers needed!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="event-date" style="background: linear-gradient(135deg, var(--church-blue), var(--light-blue));">
+                            <div class="day">02</div>
+                            <div class="month">Feb</div>
+                        </div>
+                        <div class="event-details">
+                            <h4 class="text-primary mb-2">Marriage Enrichment Seminar</h4>
+                            <p class="mb-2"><i class="fas fa-clock text-success me-2"></i>10:00 AM - 4:00 PM</p>
+                            <p class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>Church Auditorium</p>
+                            <p class="text-muted">A day dedicated to strengthening marriages with biblical principles. Registration required.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="day">14</div>
+                            <div class="month">Feb</div>
+                        </div>
+                        <div class="event-details">
+                            <h4 class="text-primary mb-2">Valentine's Day Couples Dinner</h4>
+                            <p class="mb-2"><i class="fas fa-clock text-success me-2"></i>6:30 PM - 10:00 PM</p>
+                            <p class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>Church Banquet Hall</p>
+                            <p class="text-muted">An elegant dinner celebrating love and commitment in Christ. Limited seats available.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Photo Gallery</h2>
+            <p class="text-center mb-5 lead">Moments from our church family</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%231E40AF' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3ESunday Worship%3C/text%3E%3C/svg%3E" alt="Sunday Worship">
+                        <div class="gallery-overlay">
+                            <h5>Sunday Worship Service</h5>
+                            <p class="mb-0">Our congregation gathered in praise</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%232D5016' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EBaptism Service%3C/text%3E%3C/svg%3E" alt="Baptism">
+                        <div class="gallery-overlay">
+                            <h5>Baptism Ceremony</h5>
+                            <p class="mb-0">Celebrating new life in Christ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23B91C1C' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EYouth Ministry%3C/text%3E%3C/svg%3E" alt="Youth">
+                        <div class="gallery-overlay">
+                            <h5>Youth Fellowship</h5>
+                            <p class="mb-0">Young hearts on fire for God</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%233B82F6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EChoir Performance%3C/text%3E%3C/svg%3E" alt="Choir">
+                        <div class="gallery-overlay">
+                            <h5>Church Choir</h5>
+                            <p class="mb-0">Making a joyful noise unto the Lord</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%234A7C2C' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3ECommunity Outreach%3C/text%3E%3C/svg%3E" alt="Outreach">
+                        <div class="gallery-overlay">
+                            <h5>Community Outreach</h5>
+                            <p class="mb-0">Serving with love and compassion</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23DC2626' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EChristmas Service%3C/text%3E%3C/svg%3E" alt="Christmas">
+                        <div class="gallery-overlay">
+                            <h5>Christmas Celebration</h5>
+                            <p class="mb-0">Celebrating the birth of our Savior</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
