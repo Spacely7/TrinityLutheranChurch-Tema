@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Lutheran Church - Tema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --church-white: #FFFFFF;
+            --church-green: #2D5016;
+            --church-red: #B91C1C;
+            --church-blue: #1E40AF;
+            --light-green: #4A7C2C;
+            --light-blue: #3B82F6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--church-blue) 0%, var(--church-green) 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--church-white) !important;
+        }
+
+        .nav-link {
+            color: var(--church-white) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #FFD700 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30, 64, 175, 0.8), rgba(45, 80, 22, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231E40AF" width="1200" height="600"/><path fill="%232D5016" opacity="0.3" d="M0 300L50 280C100 260 200 220 300 200C400 180 500 180 600 200C700 220 800 260 900 280C1000 300 1100 300 1150 300L1200 300V600H0Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+            color: var(--church-blue);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--church-red);
+        }
+
+        /* About Section */
+        #about {
+            background-color: #F8FAFC;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-icon {
+            font-size: 5rem;
+            color: var(--church-green);
+        }
+
+        /* Services Cards */
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .service-card .card-header {
+            background: linear-gradient(135deg, var(--church-blue), var(--light-blue));
+            color: white;
+            font-weight: 600;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+        }
+
+        /* Readers Section */
+        #readers {
+            background: linear-gradient(135deg, #E0F2FE 0%, #DCFCE7 100%);
+        }
+
+        .reader-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .reader-card {
+            background: white;
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .reader-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .reader-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--church-blue);
+        }
+
+        .reader-info {
+            padding: 20px;
+        }
+
+        /* Events Section */
+        #events {
+            background-color: white;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .event-date {
+            background: linear-gradient(135deg, var(--church-red), #DC2626);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .event-date .day {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-details {
+            padding: 25px;
+            flex: 1;
+        }
+
+        /* Gallery Section */
+        #gallery {
+            background: linear-gradient(135deg, #F0F9FF 0%, #FEF3C7 100%);
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Creeds Section */
+        #creeds {
+            background-color: #F8FAFC;
+        }
+
+        .creed-card {
+            background: white;
+            border-left: 5px solid var(--church-red);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .creed-card:hover {
+            border-left-width: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+
+        .creed-card h3 {
+            color: var(--church-blue);
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, var(--church-green) 0%, var(--light-green) 100%);
+            color: white;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-info i {
+            color: #FFD700;
+            margin-right: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1F2937;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .btn-primary {
+            background: var(--church-blue);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--church-red);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--church-green);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+
+        .btn-success:hover {
+            background: var(--light-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-church me-2"></i>Trinity Lutheran Church
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#readers">Readers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#creeds">Creeds</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1><i class="fas fa-cross me-3"></i>Trinity Lutheran Church</h1>
+            <p class="lead">Welcome to our faith community in Tema</p>
+            <p><i class="fas fa-quote-left me-2"></i>Come to me, all who labor and are heavy laden, and I will give you rest.<i class="fas fa-quote-right ms-2"></i></p>
+            <p class="fw-bold">- Matthew 11:28</p>
+            <a href="#services" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-calendar-alt me-2"></i>Service Times
+            </a>
+            <a href="#contact" class="btn btn-light btn-lg">
+                <i class="fas fa-map-marker-alt me-2"></i>Visit Us
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Trinity Lutheran Church</h2>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="about-content">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-church about-icon"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-primary mb-4">Our Mission</h3>
+                            <p class="lead">Trinity Lutheran Church is a vibrant community of believers in Tema, dedicated to spreading the Gospel of Jesus Christ and serving our community with love and compassion.</p>
+                            <p>We are committed to worship, fellowship, discipleship, and outreach. Our church family welcomes all who seek to grow in their faith and experience God's transforming love.</p>
+                            <div class="row mt-4">
+                                <div class="col-md-4 text-center mb-3">
+                                    <i class="fas fa-bible fa-3x text-primary mb-3"></i>
+                                    <h5>Biblical Teaching</h5>
+                                    <p>Grounded in Scripture</p>
+                                </div>
+                                <div class="col-md-4 text-center mb-3">
+                                    <i class="fas fa-hands-helping fa-3x text-success mb-3"></i>
+                                    <h5>Community Service</h5>
+                                    <p>Serving with love</p>
+                                </div>
+                                <div class="col-md-4 text-center mb-3">
+                                    <i class="fas fa-heart fa-3x text-danger mb-3"></i>
+                                    <h5>Fellowship</h5>
+                                    <p>United in faith</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Service Times & Programs</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-header">
+                            <i class="fas fa-sun me-2"></i>Sunday Worship
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">First Service</h5>
+                            <p class="card-text"><strong>Time:</strong> 7:00 AM - 9:00 AM</p>
+                            <p class="card-text">Traditional Lutheran service with Holy Communion</p>
+                            <hr>
+                            <h5 class="card-title text-primary">Second Service</h5>
+                            <p class="card-text"><strong>Time:</strong> 9:30 AM - 11:30 AM</p>
+                            <p class="card-text">Contemporary worship with praise team</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--church-green), var(--light-green));">
+                            <i class="fas fa-book-open me-2"></i>Bible Study
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-success">Midweek Bible Study</h5>
+                            <p class="card-text"><strong>Day:</strong> Wednesday</p>
+                            <p class="card-text"><strong>Time:</strong> 6:00 PM - 7:30 PM</p>
+                            <p class="card-text">Deep dive into God's Word with fellowship and discussion</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--church-red), #DC2626);">
+                            <i class="fas fa-praying-hands me-2"></i>Prayer Meeting
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">Prayer & Intercession</h5>
+                            <p class="card-text"><strong>Day:</strong> Friday</p>
+                            <p class="card-text"><strong>Time:</strong> 5:00 AM - 6:30 AM</p>
+                            <p class="card-text">Morning prayers and intercession for the church and community</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Readers Section -->
+    <section id="readers">
+        <div class="container">
+            <h2 class="section-title">Scripture Readers</h2>
+            <p class="text-center mb-5 lead">This Week's Scripture Readers</p>
+
+            <!-- Readers List -->
+            <div id="readersList" class="row">
+                <!-- Readers will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Creeds Section -->
+    <section id="creeds">
+        <div class="container">
+            <h2 class="section-title">The Three Ecumenical Creeds</h2>
+            <p class="text-center mb-5 lead">The historic confessions of the Christian faith</p>
+
+            <!-- Apostles' Creed -->
+            <div class="creed-card">
+                <h3><i class="fas fa-scroll me-2"></i>The Apostles' Creed</h3>
+                <p class="fw-bold text-muted mb-3">The ancient baptismal confession of the Western Church</p>
+                <p>I believe in God, the Father almighty, creator of heaven and earth.</p>
+                <p>I believe in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried; he descended to the dead. On the third day he rose again; he ascended into heaven, he is seated at the right hand of the Father, and he will come to judge the living and the dead.</p>
+                <p>I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and the life everlasting. Amen.</p>
+            </div>
+
+            <!-- Nicene Creed -->
+            <div class="creed-card">
+                <h3><i class="fas fa-scroll me-2"></i>The Nicene Creed</h3>
+                <p class="fw-bold text-muted mb-3">Established at the Council of Nicaea (325 AD) and Constantinople (381 AD)</p>
+                <p>We believe in one God, the Father, the Almighty, maker of heaven and earth, of all that is, seen and unseen.</p>
+                <p>We believe in one Lord, Jesus Christ, the only Son of God, eternally begotten of the Father, God from God, Light from Light, true God from true God, begotten, not made, of one Being with the Father; through him all things were made. For us and for our salvation he came down from heaven, was incarnate of the Holy Spirit and the Virgin Mary and became truly human. For our sake he was crucified under Pontius Pilate; he suffered death and was buried. On the third day he rose again in accordance with the Scriptures; he ascended into heaven and is seated at the right hand of the Father. He will come again in glory to judge the living and the dead, and his kingdom will have no end.</p>
+                <p>We believe in the Holy Spirit, the Lord, the giver of life, who proceeds from the Father and the Son, who with the Father and the Son is worshiped and glorified, who has spoken through the prophets. We believe in one holy catholic and apostolic Church. We acknowledge one baptism for the forgiveness of sins. We look for the resurrection of the dead, and the life of the world to come. Amen.</p>
+            </div>
+
+            <!-- Athanasian Creed -->
+            <div class="creed-card">
+                <h3><i class="fas fa-scroll me-2"></i>The Athanasian Creed</h3>
+                <p class="fw-bold text-muted mb-3">A detailed confession of the Trinity and the Incarnation</p>
+                <p>Whoever desires to be saved must, above all, hold the catholic faith. Whoever does not keep it whole and undefiled will without doubt perish eternally.</p>
+                <p>And the catholic faith is this, that we worship one God in Trinity and Trinity in Unity, neither confusing the persons nor dividing the substance. For the Father is one person, the Son is another, and the Holy Spirit is another. But the Godhead of the Father and of the Son and of the Holy Spirit is one: the glory equal, the majesty coeternal.</p>
+                <p>Such as the Father is, such is the Son, and such is the Holy Spirit: the Father uncreated, the Son uncreated, the Holy Spirit uncreated; the Father infinite, the Son infinite, the Holy Spirit infinite; the Father eternal, the Son eternal, the Holy Spirit eternal. And yet there are not three Eternals, but one Eternal, just as there are not three Uncreated or three Infinites, but one Uncreated and one Infinite.</p>
+                <p>In the same way, the Father is almighty, the Son almighty, the Holy Spirit almighty; and yet there are not three Almighties, but one Almighty.</p>
+                <p>So the Father is God, the Son is God, the Holy Spirit is God; and yet there are not three Gods, but one God. So the Father is Lord, the Son is Lord, the Holy Spirit is Lord; and yet there are not three Lords, but one Lord.</p>
+                <p>Just as we are compelled by the Christian truth to acknowledge each distinct person as God and Lord, so also are we prohibited by the catholic religion to say that there are three Gods or Lords.</p>
+                <p class="mt-3"><em>(The creed continues with detailed exposition of the Incarnation and concludes with affirmations of Christ's salvific work and the resurrection...)</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title text-white">Contact Us</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="contact-info">
+                        <h4 class="mb-4"><i class="fas fa-map-marker-alt me-2"></i>Visit Us</h4>
+                        <p><i class="fas fa-church"></i> Trinity Lutheran Church</p>
+                        <p><i class="fas fa-map-pin"></i> Community 1, Tema</p>
+                        <p><i class="fas fa-city"></i> Greater Accra Region, Ghana</p>
+                        <hr style="border-color: rgba(255,255,255,0.3);">
+                        <h4 class="mb-4 mt-4"><i class="fas fa-phone me-2"></i>Reach Us</h4>
+                        <p><i class="fas fa-phone-alt"></i> +233 XX XXX XXXX</p>
+                        <p><i class="fas fa-envelope"></i> info@trinitylutherantema.org</p>
+                        <p><i class="fas fa-globe"></i> www.trinitylutherantema.org</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-info">
+                        <h4 class="mb-4"><i class="fas fa-paper-plane me-2"></i>Send Us a Message</h4>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-light w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-church me-2"></i>Trinity Lutheran Church</h5>
+                    <p>Tema, Ghana</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-clock me-2"></i>Service Times</h5>
+                    <p>Sunday: 7:00 AM & 9:30 AM<br>Wednesday: 6:00 PM</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5><i class="fas fa-share-alt me-2"></i>Connect With Us</h5>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.2);">
+            <p class="mb-0">&copy; 2026 Trinity Lutheran Church, Tema. All rights reserved.</p>
+            <p class="mb-0"><i class="fas fa-heart text-danger"></i> Built with faith and love</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Pre-defined readers data (to be updated in the code)
+        let readers = [
+            {
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%231E40AF" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="60" fill="white" text-anchor="middle" dy=".3em"%3EKA%3C/text%3E%3C/svg%3E',
+                name: 'Kwame Asante',
+                verse: 'For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.',
+                reference: 'John 3:16'
+            },
+            {
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%232D5016" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="60" fill="white" text-anchor="middle" dy=".3em"%3EAM%3C/text%3E%3C/svg%3E',
+                name: 'Ama Mensah',
+                verse: 'The Lord is my shepherd, I lack nothing. He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.',
+                reference: 'Psalm 23:1-3'
+            },
+            {
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"%3E%3Crect fill="%23B91C1C" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="60" fill="white" text-anchor="middle" dy=".3em"%3EKO%3C/text%3E%3C/svg%3E',
+                name: 'Kofi Osei',
+                verse: 'Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.',
+                reference: 'Proverbs 3:5-6'
+            }
+        ];
+
+        // Display readers on page load
+        function displayReaders() {
+            const readersList = document.getElementById('readersList');
+            readersList.innerHTML = '';
+            
+            readers.forEach((reader, index) => {
+                const readerCard = `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="reader-card">
+                            <img src="${reader.image}" alt="${reader.name}" class="reader-img">
+                            <div class="reader-info">
+                                <h4 class="text-primary mb-3">${reader.name}</h4>
+                                <div class="text-start bg-light p-3 rounded">
+                                    <p class="fw-bold text-success mb-2"><i class="fas fa-book-open me-2"></i>${reader.reference}</p>
+                                    <p class="mb-0 text-dark fst-italic">"${reader.verse}"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                readersList.innerHTML += readerCard;
+            });
+        }
+
+        // Initialize readers on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            displayReaders();
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - navbarHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.2)';
+            } else {
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
