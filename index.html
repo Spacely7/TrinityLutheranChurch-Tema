@@ -231,6 +231,12 @@
             margin-bottom: 30px;
             cursor: pointer;
             box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .gallery-item img {
@@ -258,6 +264,126 @@
 
         .gallery-item:hover .gallery-overlay {
             transform: translateY(0);
+        }
+
+        /* Gallery Detail Modal */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            overflow-y: auto;
+        }
+
+        .gallery-modal.active {
+            display: block;
+        }
+
+        .modal-content-gallery {
+            position: relative;
+            margin: 60px auto;
+            padding: 40px;
+            max-width: 1200px;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #FFD700;
+        }
+
+        .modal-header-gallery {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .modal-header-gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-photo {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-photo img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Lightbox for full image view */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 10001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.98);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
         }
 
         /* Creeds Section */
@@ -435,13 +561,13 @@
                             <i class="fas fa-sun me-2"></i>Sunday Worship
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title text-primary">Bible Study</h5>
-                            <p class="card-text"><strong>Time:</strong> 8:00 AM - 9:00 AM</p>
-                            <p class="card-text">Thursday bible study recap</p>
-                            <hr>
                             <h5 class="card-title text-primary">First Service</h5>
-                            <p class="card-text"><strong>Time:</strong> 9:00 AM - 11:30 AM</p>
+                            <p class="card-text"><strong>Time:</strong> 7:00 AM - 9:00 AM</p>
                             <p class="card-text">Traditional Lutheran service with Holy Communion</p>
+                            <hr>
+                            <h5 class="card-title text-primary">Second Service</h5>
+                            <p class="card-text"><strong>Time:</strong> 9:30 AM - 11:30 AM</p>
+                            <p class="card-text">Contemporary worship with praise team</p>
                         </div>
                     </div>
                 </div>
@@ -452,8 +578,8 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title text-success">Midweek Bible Study</h5>
-                            <p class="card-text"><strong>Day:</strong> Thursday</p>
-                            <p class="card-text"><strong>Time:</strong> 7:00 PM - 8:00 PM</p>
+                            <p class="card-text"><strong>Day:</strong> Wednesday</p>
+                            <p class="card-text"><strong>Time:</strong> 6:00 PM - 7:30 PM</p>
                             <p class="card-text">Deep dive into God's Word with fellowship and discussion</p>
                         </div>
                     </div>
@@ -466,7 +592,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-danger">Prayer & Intercession</h5>
                             <p class="card-text"><strong>Day:</strong> Friday</p>
-                            <p class="card-text"><strong>Time:</strong> 7:00 AM - 8:00 AM</p>
+                            <p class="card-text"><strong>Time:</strong> 5:00 AM - 6:30 AM</p>
                             <p class="card-text">Morning prayers and intercession for the church and community</p>
                         </div>
                     </div>
@@ -565,7 +691,7 @@
             
             <div class="row">
                 <div class="col-md-4">
-                    <div class="gallery-item">
+                    <div class="gallery-item" onclick="openGalleryModal('worship')">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%231E40AF' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3ESunday Worship%3C/text%3E%3C/svg%3E" alt="Sunday Worship">
                         <div class="gallery-overlay">
                             <h5>Sunday Worship Service</h5>
@@ -574,7 +700,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="gallery-item">
+                    <div class="gallery-item" onclick="openGalleryModal('baptism')">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%232D5016' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EBaptism Service%3C/text%3E%3C/svg%3E" alt="Baptism">
                         <div class="gallery-overlay">
                             <h5>Baptism Ceremony</h5>
@@ -583,7 +709,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="gallery-item">
+                    <div class="gallery-item" onclick="openGalleryModal('youth')">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23B91C1C' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EYouth Ministry%3C/text%3E%3C/svg%3E" alt="Youth">
                         <div class="gallery-overlay">
                             <h5>Youth Fellowship</h5>
@@ -592,7 +718,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="gallery-item">
+                    <div class="gallery-item" onclick="openGalleryModal('choir')">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%233B82F6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EChoir Performance%3C/text%3E%3C/svg%3E" alt="Choir">
                         <div class="gallery-overlay">
                             <h5>Church Choir</h5>
@@ -601,7 +727,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="gallery-item">
+                    <div class="gallery-item" onclick="openGalleryModal('outreach')">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%234A7C2C' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3ECommunity Outreach%3C/text%3E%3C/svg%3E" alt="Outreach">
                         <div class="gallery-overlay">
                             <h5>Community Outreach</h5>
@@ -610,7 +736,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="gallery-item">
+                    <div class="gallery-item" onclick="openGalleryModal('christmas')">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23DC2626' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='white' text-anchor='middle' dy='.3em'%3EChristmas Service%3C/text%3E%3C/svg%3E" alt="Christmas">
                         <div class="gallery-overlay">
                             <h5>Christmas Celebration</h5>
@@ -622,6 +748,26 @@
         </div>
     </section>
 
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal">
+        <span class="modal-close" onclick="closeGalleryModal()">&times;</span>
+        <div class="modal-content-gallery">
+            <div class="modal-header-gallery">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDescription"></p>
+            </div>
+            <div id="galleryGrid" class="gallery-grid">
+                <!-- Photos will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox for full image view -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightboxImg" src="" alt="Full size image">
+    </div>
+
     <!-- Creeds Section -->
     <section id="creeds">
         <div class="container">
@@ -632,46 +778,31 @@
             <div class="creed-card">
                 <h3><i class="fas fa-scroll me-2"></i>The Apostles' Creed</h3>
                 <p class="fw-bold text-muted mb-3">The ancient baptismal confession of the Western Church</p>
-                <p>I believe in God the Father Almighty, Maker of heaven and earth.
-                And in Jesus Christ, His only Son, our Lord; who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead, and buried; He descended into hell; the third day He rose again from the dead; He ascended into heaven and sitteth on the right hand of God the Father Almighty; from thence He shall come to judge the quick and the dead.
-                I believe in the Holy Ghost; the holy Christian Church, the communion of saints; the forgiveness of sins; the resurrection of the body; and the life everlasting. Amen..</p>
-                <p>I believe in God the Father Almighty, Maker of heaven and earth.
-                And in Jesus Christ, His only Son, our Lord; who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead, and buried; He descended into hell; the third day He rose again from the dead; He ascended into heaven and sitteth on the right hand of God the Father Almighty; from thence He shall come to judge the quick and the dead.
-                I believe in the Holy Ghost; the holy Christian Church, the communion of saints; the forgiveness of sins; the resurrection of the body; and the life everlasting. Amen.</p>
-                <p>I believe in God the Father Almighty, Maker of heaven and earth.
-                And in Jesus Christ, His only Son, our Lord; who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead, and buried; He descended into hell; the third day He rose again from the dead; He ascended into heaven and sitteth on the right hand of God the Father Almighty; from thence He shall come to judge the quick and the dead.
-                I believe in the Holy Ghost; the holy Christian Church, the communion of saints; the forgiveness of sins; the resurrection of the body; and the life everlasting. Amen..</p>
+                <p>I believe in God, the Father almighty, creator of heaven and earth.</p>
+                <p>I believe in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried; he descended to the dead. On the third day he rose again; he ascended into heaven, he is seated at the right hand of the Father, and he will come to judge the living and the dead.</p>
+                <p>I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and the life everlasting. Amen.</p>
             </div>
 
             <!-- Nicene Creed -->
             <div class="creed-card">
                 <h3><i class="fas fa-scroll me-2"></i>The Nicene Creed</h3>
                 <p class="fw-bold text-muted mb-3">Established at the Council of Nicaea (325 AD) and Constantinople (381 AD)</p>
-                <p>I believe in God the Father Almighty, Maker of heaven and earth.
-                And in Jesus Christ, His only Son, our Lord; who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead, and buried; He descended into hell; the third day He rose again from the dead; He ascended into heaven and sitteth on the right hand of God the Father Almighty; from thence He shall come to judge the quick and the dead.
-                I believe in the Holy Ghost; the holy Christian Church, the communion of saints; the forgiveness of sins; the resurrection of the body; and the life everlasting. Amen.</p>
-                <p>I believe in God the Father Almighty, Maker of heaven and earth.
-                And in Jesus Christ, His only Son, our Lord; who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead, and buried; He descended into hell; the third day He rose again from the dead; He ascended into heaven and sitteth on the right hand of God the Father Almighty; from thence He shall come to judge the quick and the dead.
-                I believe in the Holy Ghost; the holy Christian Church, the communion of saints; the forgiveness of sins; the resurrection of the body; and the life everlasting. Amen.</p>
-                <p>I believe in God the Father Almighty, Maker of heaven and earth.
-                And in Jesus Christ, His only Son, our Lord; who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead, and buried; He descended into hell; the third day He rose again from the dead; He ascended into heaven and sitteth on the right hand of God the Father Almighty; from thence He shall come to judge the quick and the dead.
-                I believe in the Holy Ghost; the holy Christian Church, the communion of saints; the forgiveness of sins; the resurrection of the body; and the life everlasting. Amen.</p>
+                <p>We believe in one God, the Father, the Almighty, maker of heaven and earth, of all that is, seen and unseen.</p>
+                <p>We believe in one Lord, Jesus Christ, the only Son of God, eternally begotten of the Father, God from God, Light from Light, true God from true God, begotten, not made, of one Being with the Father; through him all things were made. For us and for our salvation he came down from heaven, was incarnate of the Holy Spirit and the Virgin Mary and became truly human. For our sake he was crucified under Pontius Pilate; he suffered death and was buried. On the third day he rose again in accordance with the Scriptures; he ascended into heaven and is seated at the right hand of the Father. He will come again in glory to judge the living and the dead, and his kingdom will have no end.</p>
+                <p>We believe in the Holy Spirit, the Lord, the giver of life, who proceeds from the Father and the Son, who with the Father and the Son is worshiped and glorified, who has spoken through the prophets. We believe in one holy catholic and apostolic Church. We acknowledge one baptism for the forgiveness of sins. We look for the resurrection of the dead, and the life of the world to come. Amen.</p>
             </div>
 
             <!-- Athanasian Creed -->
             <div class="creed-card">
                 <h3><i class="fas fa-scroll me-2"></i>The Athanasian Creed</h3>
                 <p class="fw-bold text-muted mb-3">A detailed confession of the Trinity and the Incarnation</p>
-                <p>Whoever will be saved, before all things it is necessary that he hold the catholic faith. Which faith except everyone keep whole and undefiled, without doubt he will perish eternally. And the catholic faith is this, that we worship one God in Trinity and Trinity in Unity, Neither confounding the persons nor dividing the substance.</p>
-                <p>For there is one person of the Father, another of the Son, and another of the Holy Ghost. But the Godhead of the Father, of the Son, and of the Holy Ghost is all one: The glory equal, the majesty coeternal.  Such as the Father is, such is the Son, and such is the Holy Ghost.</p>
+                <p>Whoever desires to be saved must, above all, hold the catholic faith. Whoever does not keep it whole and undefiled will without doubt perish eternally.</p>
+                <p>And the catholic faith is this, that we worship one God in Trinity and Trinity in Unity, neither confusing the persons nor dividing the substance. For the Father is one person, the Son is another, and the Holy Spirit is another. But the Godhead of the Father and of the Son and of the Holy Spirit is one: the glory equal, the majesty coeternal.</p>
                 <p>Such as the Father is, such is the Son, and such is the Holy Spirit: the Father uncreated, the Son uncreated, the Holy Spirit uncreated; the Father infinite, the Son infinite, the Holy Spirit infinite; the Father eternal, the Son eternal, the Holy Spirit eternal. And yet there are not three Eternals, but one Eternal, just as there are not three Uncreated or three Infinites, but one Uncreated and one Infinite.</p>
-                <p>The Father uncreated, the Son uncreated, the Holy Ghost uncreated.The Father incomprehensible, the Son incomprehensible, the Holy Ghost incomprehensible.The Father eternal, the Son eternal, the Holy Ghost eternal.And yet they are not three eternals but one eternal.</p>
-                <p> As also there are not three uncreated nor three incomprehensible, but one uncreated and one incomprehensible.So likewise the Father is almighty, the Son almighty, and the Holy Ghost almighty.And yet they are not three almighties but one almighty.So the Father is God, the Son is God, and the Holy Ghost is God.</p>
-                <p>And yet they are not three Gods but one God.So likewise the Father is Lord, the Son Lord, and the Holy Ghost Lord.And yet not three Lords but one Lord.For as we are compelled by the Christian truth to acknowledge every person by Himself to be God and Lord,So we are forbidden by the catholic religion to say, There are three Gods or three Lords.</p>
-                <p>The Father is made of none, neither created nor begotten.The Son is of the Father alone, not made nor created, but begotten.The Holy Ghost is of the Father and of the Son, neither made, nor created, nor begotten, but proceeding.So there is one Father, not three Fathers; one Son, not three Sons; one Holy Ghost, not three Holy Ghosts.And in this Trinity none is before or after another; none is greater or less than another;But the whole three persons are coeternal together and coequal,So that in all things, as has been stated above, the Trinity in Unity and Unity in Trinity is to be worshiped.</p>
-                <p>He therefore that will be saved is compelled thus to think of the Trinity.Furthermore, it is necessary to everlasting salvation that he also believe faithfully the incarnation of our Lord Jesus Christ.For the right faith is that we believe and confess that our Lord Jesus Christ, the Son of God, is God and man;God of the substance of the Father, begotten before the worlds; and man of the substance of His mother, born in the world;Perfect God and perfect man, of a reasonable soul and human flesh subsisting;</p>           
-                <p> Equal to the Father as touching His Godhead and inferior to the Father as touching His manhood;Who, although He is God and man, yet He is not two, but one Christ:One, not by conversion of the Godhead into flesh, but by taking the manhood into God;One altogether, not by confusion of substance, but by unity of person.For as the reasonable soul and flesh is one man, so God and man is one Christ;</p>
-                <p> Who suffered for our salvation, descended into hell, rose again the third day from the dead;He ascended into heaven, He sits on the right hand of the Father, God Almighty;From whence He shall come to judge the living and the dead.At whose coming all men shall rise again with their bodies, and shall give account of their own works.And they that have done good shall go into life everlasting, and they that have done evil into everlasting fire.This is the catholic faith, which except a man believe faithfully and firmly, he cannot be saved.</p>
+                <p>In the same way, the Father is almighty, the Son almighty, the Holy Spirit almighty; and yet there are not three Almighties, but one Almighty.</p>
+                <p>So the Father is God, the Son is God, the Holy Spirit is God; and yet there are not three Gods, but one God. So the Father is Lord, the Son is Lord, the Holy Spirit is Lord; and yet there are not three Lords, but one Lord.</p>
+                <p>Just as we are compelled by the Christian truth to acknowledge each distinct person as God and Lord, so also are we prohibited by the catholic religion to say that there are three Gods or Lords.</p>
+                <p class="mt-3"><em>(The creed continues with detailed exposition of the Incarnation and concludes with affirmations of Christ's salvific work and the resurrection...)</em></p>
             </div>
         </div>
     </section>
@@ -685,7 +816,7 @@
                     <div class="contact-info">
                         <h4 class="mb-4"><i class="fas fa-map-marker-alt me-2"></i>Visit Us</h4>
                         <p><i class="fas fa-church"></i> Trinity Lutheran Church</p>
-                        <p><i class="fas fa-map-pin"></i> Community 2, Tema</p>
+                        <p><i class="fas fa-map-pin"></i> Community 1, Tema</p>
                         <p><i class="fas fa-city"></i> Greater Accra Region, Ghana</p>
                         <hr style="border-color: rgba(255,255,255,0.3);">
                         <h4 class="mb-4 mt-4"><i class="fas fa-phone me-2"></i>Reach Us</h4>
@@ -727,13 +858,13 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5><i class="fas fa-clock me-2"></i>Service Times</h5>
-                    <p>Sunday: 9:00 AM & 9:30 AM<br>Thursday: 7:00 PM</p>
+                    <p>Sunday: 7:00 AM & 9:30 AM<br>Wednesday: 6:00 PM</p>
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5><i class="fas fa-share-alt me-2"></i>Connect With Us</h5>
                     <div class="mt-3">
-                        <a href="https://www.facebook.com/share/1WBWGpCkMZ/?mibextid=wwXIfr" class="text-white me-3"><i class="fab fa-facebook fa-2x"></i></a>
-                        <a href="https://www.instagram.com/trinitylutherangh?igsh=YWw1MGN0dnFxbmNq" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
                         <a href="#" class="text-white"><i class="fab fa-youtube fa-2x"></i></a>
                     </div>
                 </div>
@@ -746,6 +877,133 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Gallery data structure - Add your actual images here
+        const galleryData = {
+            worship: {
+                title: 'Sunday Worship Service',
+                description: 'Our congregation gathered in praise and worship',
+                photos: [
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%231E40AF" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EWorship 1%3C/text%3E%3C/svg%3E', caption: 'Opening Praise' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%232563EB" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EWorship 2%3C/text%3E%3C/svg%3E', caption: 'Prayer Time' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%233B82F6" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EWorship 3%3C/text%3E%3C/svg%3E', caption: 'Sermon' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%231E3A8A" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EWorship 4%3C/text%3E%3C/svg%3E', caption: 'Holy Communion' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%230F172A" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EWorship 5%3C/text%3E%3C/svg%3E', caption: 'Closing Prayer' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%231E40AF" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EWorship 6%3C/text%3E%3C/svg%3E', caption: 'Fellowship' }
+                ]
+            },
+            baptism: {
+                title: 'Baptism Ceremony',
+                description: 'Celebrating new life in Christ through baptism',
+                photos: [
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%232D5016" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EBaptism 1%3C/text%3E%3C/svg%3E', caption: 'Baptism Preparation' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%233F6212" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EBaptism 2%3C/text%3E%3C/svg%3E', caption: 'The Ceremony' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%234A7C2C" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EBaptism 3%3C/text%3E%3C/svg%3E', caption: 'Water Baptism' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23166534" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EBaptism 4%3C/text%3E%3C/svg%3E', caption: 'New Believers' }
+                ]
+            },
+            youth: {
+                title: 'Youth Fellowship',
+                description: 'Young hearts on fire for God',
+                photos: [
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23B91C1C" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EYouth 1%3C/text%3E%3C/svg%3E', caption: 'Youth Worship' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23DC2626" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EYouth 2%3C/text%3E%3C/svg%3E', caption: 'Games Night' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23EF4444" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EYouth 3%3C/text%3E%3C/svg%3E', caption: 'Bible Study' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23991B1B" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EYouth 4%3C/text%3E%3C/svg%3E', caption: 'Fellowship Dinner' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%237F1D1D" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EYouth 5%3C/text%3E%3C/svg%3E', caption: 'Team Building' }
+                ]
+            },
+            choir: {
+                title: 'Church Choir',
+                description: 'Making a joyful noise unto the Lord',
+                photos: [
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%233B82F6" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChoir 1%3C/text%3E%3C/svg%3E', caption: 'Choir Performance' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%232563EB" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChoir 2%3C/text%3E%3C/svg%3E', caption: 'Choir Practice' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%231D4ED8" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChoir 3%3C/text%3E%3C/svg%3E', caption: 'Special Performance' }
+                ]
+            },
+            outreach: {
+                title: 'Community Outreach',
+                description: 'Serving with love and compassion',
+                photos: [
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%234A7C2C" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EOutreach 1%3C/text%3E%3C/svg%3E', caption: 'Food Distribution' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23365314" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EOutreach 2%3C/text%3E%3C/svg%3E', caption: 'Medical Screening' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%232D5016" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EOutreach 3%3C/text%3E%3C/svg%3E', caption: 'Community Service' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%233F6212" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EOutreach 4%3C/text%3E%3C/svg%3E', caption: 'Helping Hands' }
+                ]
+            },
+            christmas: {
+                title: 'Christmas Celebration',
+                description: 'Celebrating the birth of our Savior',
+                photos: [
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23DC2626" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChristmas 1%3C/text%3E%3C/svg%3E', caption: 'Christmas Service' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23B91C1C" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChristmas 2%3C/text%3E%3C/svg%3E', caption: 'Nativity Play' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23991B1B" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChristmas 3%3C/text%3E%3C/svg%3E', caption: 'Carol Singing' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23EF4444" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChristmas 4%3C/text%3E%3C/svg%3E', caption: 'Christmas Dinner' },
+                    { url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%237F1D1D" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="20" fill="white" text-anchor="middle" dy=".3em"%3EChristmas 5%3C/text%3E%3C/svg%3E', caption: 'Gift Exchange' }
+                ]
+            }
+        };
+
+        // Open gallery modal
+        function openGalleryModal(category) {
+            const modal = document.getElementById('galleryModal');
+            const data = galleryData[category];
+            
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDescription').textContent = data.description;
+            
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = '';
+            
+            data.photos.forEach((photo, index) => {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'gallery-photo';
+                photoDiv.onclick = () => openLightbox(photo.url);
+                photoDiv.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.caption}">
+                    <div class="gallery-photo-caption">${photo.caption}</div>
+                `;
+                galleryGrid.appendChild(photoDiv);
+            });
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close gallery modal
+        function closeGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Open lightbox
+        function openLightbox(imgUrl) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            lightboxImg.src = imgUrl;
+            lightbox.classList.add('active');
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('galleryModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeGalleryModal();
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
         // Pre-defined readers data (to be updated in the code)
         let readers = [
             {
